@@ -26,6 +26,7 @@ export const getPost = (id) => request(`/posts/${id}`);
 export const getRecentWinners = (days = 7) => request(`/posts/winners/recent?days=${days}`);
 
 // Scrape
+export const scrapeAll = () => request('/scrape/all', { method: 'POST', body: '{}' });
 export const triggerScrape = (data) => request('/scrape/trigger', { method: 'POST', body: JSON.stringify(data || {}) });
 export const triggerHashtagScrape = () => request('/scrape/hashtags', { method: 'POST', body: '{}' });
 export const getScrapeRuns = (limit = 20) => request(`/scrape/runs?limit=${limit}`);
@@ -57,6 +58,10 @@ export const updateSetting = (key, value) => request(`/settings/${key}`, { metho
 // Stats
 export const getOverviewStats = () => request('/stats/overview');
 export const getAccountStats = (id) => request(`/stats/account/${id}`);
+
+// Remix
+export const remixPost = (data) => request('/remix', { method: 'POST', body: JSON.stringify(data) });
+export const remixBatch = (post_ids) => request('/remix/batch', { method: 'POST', body: JSON.stringify({ post_ids }) });
 
 // Health
 export const healthCheck = () => request('/health');

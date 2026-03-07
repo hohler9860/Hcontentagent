@@ -28,6 +28,19 @@ Execute the full content pipeline in order:
    - Outputs video scripts → `scripts/`
    - Outputs newsletters → `newsletters/`
 
+### "scrape today" — Daily Scrape & Populate Dashboard
+Scrape all tracked accounts via Apify, score posts, detect winners, and populate the dashboard:
+
+1. **Start the server** if not running: `cd dashboard && npm run server`
+2. **Scrape ALL active accounts** via `POST /api/scrape/all` — hits Apify Instagram Scraper for all 16+ accounts + hashtags
+3. **Auto-scores** all new posts (virality 0-100, winner detection with 5 criteria)
+4. **Auto-classifies** posts by content pillar and hook type
+5. **Auto-discovers** new accounts from hashtag scrapes (high views + low followers)
+6. **Report results** to user: new posts found, winners detected, accounts discovered
+7. **Remix winners** — auto-remix top winners using viral hooks framework + humanization via `POST /api/remix/batch`
+
+Requirements: `APIFY_API_TOKEN` must be set in Settings > API Keys or `.env` file. Server must be running.
+
 ### Shortcuts
 
 | Command | Action |
@@ -36,6 +49,8 @@ Execute the full content pipeline in order:
 | `run ideation` | Phase 2 only — run pipeline-ideator (assumes briefs exist) |
 | `script these: [numbers]` | Phase 3 — run pipeline-scripter on specified concept numbers |
 | `run newsletter only` | Run pipeline-scripter for newsletter concepts only |
+| `scrape today` | Scrape all accounts via Apify → score → detect winners → remix top posts |
+| `remix winners` | Remix the top winning posts using viral hooks + humanization |
 
 ## Directory Structure
 

@@ -13,6 +13,7 @@ import pipelineRouter from './routes/pipeline.js';
 import scriptsRouter from './routes/scripts.js';
 import settingsRouter from './routes/settings.js';
 import statsRouter from './routes/stats.js';
+import remixRouter from './routes/remix.js';
 
 // Import scheduler (starts cron jobs)
 import './scraper/scheduler.js';
@@ -33,6 +34,7 @@ app.use('/api/pipeline', pipelineRouter);
 app.use('/api/scripts', scriptsRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/stats', statsRouter);
+app.use('/api/remix', remixRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

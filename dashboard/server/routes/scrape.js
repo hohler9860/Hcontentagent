@@ -1,10 +1,20 @@
 import { Router } from 'express';
 import db from '../db.js';
-import { scrapeAccounts, scrapeHashtags } from '../scraper/service.js';
+import { scrapeAccounts, scrapeHashtags, scrapeAll } from '../scraper/service.js';
 
 const router = Router();
 
-// POST /api/scrape/trigger — manually trigger a scrape
+// POST /api/scrape/all — scrape ALL active accounts + hashtags + score + classify
+router.post('/all', async (req, res) => {
+  try {
+    const result = await scrapeAll();
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// POST /api/scrape/trigger — manually trigger a scrape by tier or handles
 router.post('/trigger', async (req, res) => {
   const { tier, handles } = req.body;
   try {
