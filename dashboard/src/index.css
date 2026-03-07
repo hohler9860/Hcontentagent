@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #FFFFFF;
+  --color-surface-hover: rgba(0, 0, 0, 0.03);
+  --color-surface-active: rgba(0, 0, 0, 0.06);
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-primary: #1D1D1F;
+  --color-secondary: #6E6E73;
+  --color-bg-alt: #FAFAFA;
+  --color-overdue: #FF3B30;
+  --color-card-shadow: rgba(0, 0, 0, 0.06);
+  --color-card-shadow-hover: rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #FFFFFF;
+  color: #1D1D1F;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.47;
+  font-size: 15px;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
+.d1 { animation-delay: 0ms; }
+.d2 { animation-delay: 50ms; }
+.d3 { animation-delay: 100ms; }
+.d4 { animation-delay: 150ms; }
+.d5 { animation-delay: 200ms; }
+.d6 { animation-delay: 250ms; }
+.d7 { animation-delay: 300ms; }
+.d8 { animation-delay: 350ms; }
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.12);
+}
