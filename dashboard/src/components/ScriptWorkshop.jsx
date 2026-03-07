@@ -89,14 +89,13 @@ export default function ScriptWorkshop({ scripts, setScripts, remixSource, pipel
   const [rightNotes, setRightNotes] = useState('')
   const [remixing, setRemixing] = useState(false)
   const [remixError, setRemixError] = useState(null)
-  const lastRemixId = useRef(null)
+  const remixCounter = useRef(0)
 
   // When a new remixSource arrives, auto-generate the remix
   useEffect(() => {
     if (!remixSource) return
-    const postId = remixSource.id || remixSource.shortCode
-    if (postId === lastRemixId.current) return
-    lastRemixId.current = postId
+    remixCounter.current += 1
+    const thisRun = remixCounter.current
 
     setLeftPanel(remixSource.caption || remixSource.desc || '')
     setLeftMeta(`@${remixSource.ownerUsername || remixSource.handle}`)
@@ -107,10 +106,12 @@ export default function ScriptWorkshop({ scripts, setScripts, remixSource, pipel
 
     remixPost(remixSource)
       .then(script => {
+        if (remixCounter.current !== thisRun) return
         setRightPanel(script)
         setRemixing(false)
       })
       .catch(err => {
+        if (remixCounter.current !== thisRun) return
         setRemixError(err.message)
         setRemixing(false)
       })

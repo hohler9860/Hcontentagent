@@ -5,6 +5,7 @@ import competitorData from './data/competitor-posts.json'
 import Header from './components/Header'
 import HeroStatus from './components/HeroStatus'
 import Pipeline from './components/Pipeline'
+import InsightsPanel from './components/InsightsPanel'
 import CompetitorHub from './components/CompetitorHub'
 import ScriptWorkshop from './components/ScriptWorkshop'
 import Accountability from './components/Accountability'
@@ -18,7 +19,7 @@ export default function App() {
   const [remixSource, setRemixSource] = useState(null)
 
   function handleRemix(post) {
-    setRemixSource(post)
+    setRemixSource({ ...post, _ts: Date.now() })
     document.getElementById('scripts')?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -27,6 +28,7 @@ export default function App() {
       <Header />
       <HeroStatus pipeline={pipeline} competitorPostCount={competitorPosts.length} checklist={checklist} />
       <Pipeline pipeline={pipeline} setPipeline={setPipeline} />
+      <InsightsPanel />
       <CompetitorHub competitorPosts={competitorPosts} onRemix={handleRemix} />
       <ScriptWorkshop scripts={scripts} setScripts={setScripts} remixSource={remixSource} pipeline={pipeline} setPipeline={setPipeline} />
       <Accountability checklist={checklist} setChecklist={setChecklist} />

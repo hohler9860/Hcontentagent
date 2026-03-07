@@ -1,4 +1,4 @@
-const NAV_ITEMS = ['Pipeline', 'Competitors', 'Scripts', 'Accountability', 'Calendar']
+const NAV_ITEMS = ['Pipeline', 'Insights', 'Competitors', 'Scripts', 'Accountability', 'Calendar']
 
 export default function Header() {
   const date = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
