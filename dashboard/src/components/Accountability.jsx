@@ -69,16 +69,39 @@ export default function Accountability({ checklist, setChecklist }) {
             </div>
           </div>
 
-          {/* Sidebar: Streak + Weekly */}
+          {/* Sidebar: Streak + Heatmap + Weekly */}
           <div className="space-y-6">
             <div className="card p-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-secondary mb-3">Streak</p>
               <p className="text-[28px] font-semibold text-primary">{currentStreak} days</p>
               <p className="text-[12px] text-secondary mt-1">Longest: {longestStreak} days</p>
+              <p className="text-[12px] text-secondary mt-0.5">Consistency: {Math.round((currentStreak / 30) * 100)}% (30d)</p>
               <div className="flex gap-2 mt-4">
                 {streakDays.map((d, i) => (
                   <div key={i} className={`w-3 h-3 rounded-full ${d === null ? 'bg-black/[0.06]' : d ? 'bg-primary/30' : 'bg-black/[0.06]'}`} />
                 ))}
+              </div>
+            </div>
+
+            {/* GitHub-style Heatmap */}
+            <div className="card p-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-secondary mb-3">Activity (30 days)</p>
+              <div className="grid grid-cols-7 gap-1">
+                {Array.from({ length: 30 }, (_, i) => {
+                  // Simulate activity levels: 0-3
+                  const level = i < 26 ? [0, 1, 2, 3, 1, 2, 0, 3, 2, 1, 1, 2, 3, 0, 2, 1, 3, 2, 1, 0, 2, 3, 1, 2, 1, 2][i] : 0
+                  const colors = ['bg-black/[0.04]', 'bg-primary/15', 'bg-primary/30', 'bg-primary/50']
+                  return (
+                    <div key={i} className={`w-full aspect-square rounded-sm ${colors[level]}`} title={`Day ${i + 1}: ${level} tasks`} />
+                  )
+                })}
+              </div>
+              <div className="flex items-center gap-1 mt-2 text-[10px] text-secondary">
+                <span>Less</span>
+                {['bg-black/[0.04]', 'bg-primary/15', 'bg-primary/30', 'bg-primary/50'].map((c, i) => (
+                  <div key={i} className={`w-2.5 h-2.5 rounded-sm ${c}`} />
+                ))}
+                <span>More</span>
               </div>
             </div>
 

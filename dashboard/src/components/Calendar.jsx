@@ -10,6 +10,13 @@ const STATUS_STYLES = {
   idea: 'bg-black/[0.06]',
 }
 
+const PLATFORM_COLORS = {
+  ig: 'bg-pink-400',
+  tiktok: 'bg-cyan-500',
+  substack: 'bg-orange-400',
+  x: 'bg-gray-600',
+}
+
 function AddEventModal({ day, onClose, onAdd }) {
   const [title, setTitle] = useState('')
   const [platform, setPlatform] = useState('ig')
@@ -118,7 +125,7 @@ export default function Calendar() {
                     {evts && (
                       <div className="flex gap-0.5 mt-1">
                         {evts.map((ev, j) => (
-                          <div key={j} className={`w-1.5 h-1.5 rounded-full ${STATUS_STYLES[ev.status]}`} />
+                          <div key={j} className={`w-1.5 h-1.5 rounded-full ${PLATFORM_COLORS[ev.platform] || STATUS_STYLES[ev.status]}`} />
                         ))}
                       </div>
                     )}

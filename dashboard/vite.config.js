@@ -14,6 +14,10 @@ export default defineConfig({
           'anthropic-dangerous-direct-browser-access': 'true',
         },
       },
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
     },
   },
 })

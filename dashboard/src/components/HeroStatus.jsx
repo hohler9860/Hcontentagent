@@ -1,4 +1,4 @@
-import { FileText, Pen, Send, Megaphone } from 'lucide-react'
+import { FileText, Pen, Send, Megaphone, TrendingUp, Users } from 'lucide-react'
 
 function getGreeting() {
   const h = new Date().getHours()
@@ -7,18 +7,22 @@ function getGreeting() {
   return 'Good evening'
 }
 
-const STATS = [
-  { label: 'Posts This Week', value: '3/7', icon: FileText },
-  { label: 'Scripts Ready', value: '5', icon: Pen },
-  { label: 'Outreach Sent', value: '8/15', icon: Send },
-  { label: 'Ads Active', value: '2', icon: Megaphone },
-]
+export default function HeroStatus({ pipeline, competitorPostCount, checklist, stats }) {
+  const drafts = pipeline
+    ? (pipeline?.writing?.length || 0) + (pipeline?.review?.length || 0)
+    : (stats?.pipeline?.writing || 0) + (stats?.pipeline?.review || 0)
 
-export default function HeroStatus({ pipeline, competitorPostCount, checklist }) {
-  const drafts = (pipeline?.writing?.length || 0) + (pipeline?.review?.length || 0)
-  const total = checklist ? Object.keys(checklist).length : 14
-  const done = checklist ? Object.values(checklist).filter(v => v?.done).length : 0
-  const remaining = 14 - done
+  const postCount = competitorPostCount || stats?.totalPosts || 0
+  const remaining = checklist
+    ? 14 - Object.values(checklist).filter(v => v?.done).length
+    : 0
+
+  const quickStats = [
+    { label: 'Posts Tracked', value: stats?.totalPosts || postCount || '—', icon: FileText },
+    { label: 'Scripts Ready', value: stats?.scriptsReady || '—', icon: Pen },
+    { label: 'Winners (7d)', value: stats?.winnersThisWeek || '—', icon: TrendingUp },
+    { label: 'Accounts', value: stats?.totalAccounts || '—', icon: Users },
+  ]
 
   return (
     <section className="fade-up d1 py-16 px-6 max-w-[1080px] mx-auto">
@@ -26,10 +30,10 @@ export default function HeroStatus({ pipeline, competitorPostCount, checklist })
         {getGreeting()}, H.
       </h1>
       <p className="text-[15px] text-secondary mt-3">
-        {drafts} drafts in progress &middot; {competitorPostCount} competitor posts tracked &middot; {remaining > 0 ? `${remaining} tasks remaining` : 'all tasks done'}
+        {drafts} drafts in progress &middot; {postCount} posts tracked{remaining > 0 ? ` · ${remaining} tasks remaining` : ''}
       </p>
       <div className="flex flex-wrap gap-3 mt-8">
-        {STATS.map(({ label, value, icon: Icon }) => (
+        {quickStats.map(({ label, value, icon: Icon }) => (
           <div key={label} className="card flex items-center gap-3 px-5 py-3">
             <Icon size={16} className="text-secondary" />
             <div>
