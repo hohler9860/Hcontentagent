@@ -123,7 +123,7 @@ export default function CompetitorDetailPage() {
         {/* Winning Formula */}
         {(Object.keys(winnerPillars).length > 0 || Object.keys(winnerHooks).length > 0) && (
           <div className="card p-5 mb-6 bg-amber-50/30 border-amber-100">
-            <h2 className="text-[14px] font-semibold text-amber-800 mb-3 flex items-center gap-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-amber-800 mb-3 flex items-center gap-2">
               <Trophy size={14} /> Winning Formula
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
@@ -158,7 +158,7 @@ export default function CompetitorDetailPage() {
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Content Pillars */}
           <div className="card p-5">
-            <h2 className="text-[14px] font-semibold text-primary mb-4 flex items-center gap-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4 flex items-center gap-2">
               <BarChart3 size={14} /> Content Pillars
             </h2>
             {pillarBreakdown.length > 0 ? (
@@ -187,7 +187,7 @@ export default function CompetitorDetailPage() {
 
           {/* Hook Types */}
           <div className="card p-5">
-            <h2 className="text-[14px] font-semibold text-primary mb-4 flex items-center gap-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4 flex items-center gap-2">
               <TrendingUp size={14} /> Hook Types
             </h2>
             {hookBreakdown.length > 0 ? (
@@ -217,7 +217,7 @@ export default function CompetitorDetailPage() {
 
         {/* Top Posts */}
         <div className="card p-5">
-          <h2 className="text-[14px] font-semibold text-primary mb-4 flex items-center gap-2">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4 flex items-center gap-2">
             <Trophy size={14} /> Top Posts by Virality
           </h2>
           {topPosts.length > 0 ? (

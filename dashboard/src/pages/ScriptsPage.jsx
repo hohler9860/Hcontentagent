@@ -129,16 +129,16 @@ export default function ScriptsPage() {
       <div className="max-w-[1080px] mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1">Script Workshop</p>
-            <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-primary">Write. Remix. Ship.</h1>
+            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-secondary mb-1">SCRIPT WORKSHOP</p>
+            <h1 className="text-[22px] font-bold tracking-[-0.02em] text-primary">WRITE. REMIX. SHIP.</h1>
           </div>
           <span className="text-[12px] text-secondary">{scripts.length} scripts</span>
         </div>
 
         {/* Script Remixer */}
         <div ref={remixRef} className="card p-6 mb-8 border-primary/10">
-          <h3 className="text-[15px] font-semibold text-primary mb-1 flex items-center gap-2">
-            <Sparkles size={15} /> Script Remixer
+          <h3 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-1 flex items-center gap-2">
+            <Sparkles size={14} /> SCRIPT REMIXER
           </h3>
           <p className="text-[12px] text-secondary mb-5">Paste a competitor's caption and remix it with viral hooks + humanization for Dialed by H</p>
 
@@ -208,7 +208,7 @@ export default function ScriptsPage() {
         </div>
 
         {/* Script Library */}
-        <h3 className="text-[15px] font-semibold text-primary mb-4">Script Library</h3>
+        <h3 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4">SCRIPT LIBRARY</h3>
         {loading ? (
           <p className="text-[13px] text-secondary">Loading scripts...</p>
         ) : scripts.length === 0 ? (

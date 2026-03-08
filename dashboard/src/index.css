@@ -11,6 +11,36 @@
   --color-overdue: #FF3B30;
   --color-card-shadow: rgba(0, 0, 0, 0.06);
   --color-card-shadow-hover: rgba(0, 0, 0, 0.08);
+
+  /* Rainbow button colors */
+  --color-color-1: hsl(var(--color-1));
+  --color-color-2: hsl(var(--color-2));
+  --color-color-3: hsl(var(--color-3));
+  --color-color-4: hsl(var(--color-4));
+  --color-color-5: hsl(var(--color-5));
+
+  /* Animations */
+  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
+  --animate-shine: shine var(--duration, 14s) infinite linear;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+@keyframes shine {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+:root {
+  --color-1: 0 100% 63%;
+  --color-2: 270 100% 63%;
+  --color-3: 210 100% 63%;
+  --color-4: 195 100% 63%;
+  --color-5: 90 100% 63%;
 }
 
 * { box-sizing: border-box; }
@@ -54,4 +84,13 @@ body {
 .card:hover {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   border-color: rgba(0,0,0,0.12);
+}
+
+/* Section titles — bold uppercase */
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-secondary);
 }

@@ -53,7 +53,7 @@ export default function InsightsPage() {
       <div className="max-w-[1080px] mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-[20px] font-semibold text-primary">Content Intelligence</h1>
+            <h1 className="text-[13px] font-bold uppercase tracking-[0.12em] text-primary">CONTENT INTELLIGENCE</h1>
             <p className="text-[12px] text-secondary mt-1">Cross-competitor analysis of what's actually working</p>
           </div>
           <div className="flex gap-1 bg-bg-alt rounded-lg p-0.5">
@@ -73,7 +73,7 @@ export default function InsightsPage() {
 
         {/* Hook Performance */}
         <div className="card p-5 mb-6">
-          <h2 className="text-[14px] font-semibold text-primary mb-1 flex items-center gap-2">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-1 flex items-center gap-2">
             <Zap size={14} /> Hook Type Performance
           </h2>
           <p className="text-[11px] text-secondary mb-4">Which hook patterns drive the most engagement across all competitors</p>
@@ -119,7 +119,7 @@ export default function InsightsPage() {
 
         {/* Content Pillar Performance */}
         <div className="card p-5 mb-6">
-          <h2 className="text-[14px] font-semibold text-primary mb-1 flex items-center gap-2">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-1 flex items-center gap-2">
             <BarChart3 size={14} /> Content Pillar Performance
           </h2>
           <p className="text-[11px] text-secondary mb-4">Which content categories perform best across the watch space</p>
@@ -155,7 +155,7 @@ export default function InsightsPage() {
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Winning Combos */}
           <div className="card p-5">
-            <h2 className="text-[14px] font-semibold text-primary mb-1 flex items-center gap-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-1 flex items-center gap-2">
               <Target size={14} /> Winning Combinations
             </h2>
             <p className="text-[11px] text-secondary mb-4">Hook + Pillar combos that produce winners</p>
@@ -183,7 +183,7 @@ export default function InsightsPage() {
 
           {/* Account Rankings */}
           <div className="card p-5">
-            <h2 className="text-[14px] font-semibold text-primary mb-1 flex items-center gap-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-1 flex items-center gap-2">
               <Crown size={14} /> Account Rankings
             </h2>
             <p className="text-[11px] text-secondary mb-4">Who's performing best right now</p>
@@ -211,7 +211,7 @@ export default function InsightsPage() {
         {/* Key Takeaways */}
         {hookPerformance.length > 0 && pillarPerformance.length > 0 && (
           <div className="card p-5 bg-primary/[0.02] border-primary/10">
-            <h2 className="text-[14px] font-semibold text-primary mb-3 flex items-center gap-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-3 flex items-center gap-2">
               <TrendingUp size={14} /> Key Takeaways for Dialed by H
             </h2>
             <div className="space-y-2 text-[13px] text-primary/80">

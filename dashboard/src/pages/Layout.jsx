@@ -6,8 +6,8 @@ export default function Layout() {
     <div className="min-h-screen">
       <Header />
       <Outlet />
-      <footer className="py-10 text-center">
-        <p className="text-[11px] text-black/15">Dialed by H &middot; Content Agent</p>
+      <footer className="py-10 text-center border-t border-border/50">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-black/20">DIALED BY H &middot; CONTENT AGENT</p>
       </footer>
     </div>
   )

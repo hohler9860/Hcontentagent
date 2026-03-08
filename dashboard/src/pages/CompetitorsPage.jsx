@@ -131,7 +131,7 @@ export default function CompetitorsPage() {
     <section className="fade-up d2 py-12 px-6">
       <div className="max-w-[1080px] mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-[20px] font-semibold text-primary">Competitor Landscape</h1>
+          <h1 className="text-[13px] font-bold uppercase tracking-[0.12em] text-primary">COMPETITOR LANDSCAPE</h1>
           <div className="flex items-center gap-2 text-[11px] text-secondary">
             <Users size={14} />
             <span>{accounts.length} tracked · {selectedAccounts.size} active · {filteredPosts.length} posts</span>
@@ -141,7 +141,7 @@ export default function CompetitorsPage() {
         {/* Account Toggles */}
         <div className="card p-4 mb-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-secondary">Filter by Account</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-secondary">FILTER BY ACCOUNT</span>
             <div className="flex gap-2">
               <button onClick={selectAll} className="text-[11px] text-primary hover:underline">All</button>
               <button onClick={selectNone} className="text-[11px] text-secondary hover:underline">None</button>

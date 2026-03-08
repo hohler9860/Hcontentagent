@@ -27,11 +27,11 @@ export default function DiscoverPage() {
   return (
     <section className="fade-up d2 py-12 px-6">
       <div className="max-w-[1080px] mx-auto">
-        <h1 className="text-[20px] font-semibold text-primary mb-8">Discover</h1>
+        <h1 className="text-[13px] font-bold uppercase tracking-[0.12em] text-primary mb-8">DISCOVER</h1>
 
         {/* New Winners */}
         <div className="mb-10">
-          <h2 className="text-[15px] font-semibold text-primary mb-4 flex items-center gap-2">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4 flex items-center gap-2">
             <Trophy size={15} className="text-amber-500" /> New Winners
           </h2>
           {winners.length > 0 ? (
@@ -70,7 +70,7 @@ export default function DiscoverPage() {
 
         {/* Newly Discovered Accounts */}
         <div className="mb-10">
-          <h2 className="text-[15px] font-semibold text-primary mb-4 flex items-center gap-2">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4 flex items-center gap-2">
             <Sparkles size={15} className="text-purple-500" /> Newly Discovered Accounts
           </h2>
           {discovered.length > 0 ? (
@@ -90,7 +90,7 @@ export default function DiscoverPage() {
 
         {/* Trending This Week */}
         <div>
-          <h2 className="text-[15px] font-semibold text-primary mb-4 flex items-center gap-2">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-4 flex items-center gap-2">
             <TrendingUp size={15} className="text-green-500" /> Trending This Week
           </h2>
           {trending.length > 0 ? (

@@ -12,8 +12,8 @@ export default function SettingsPage() {
   return (
     <section className="fade-up d2 py-12 px-6">
       <div className="max-w-[1080px] mx-auto">
-        <h1 className="text-[20px] font-semibold text-primary mb-6 flex items-center gap-2">
-          <Settings size={20} /> Settings
+        <h1 className="text-[13px] font-bold uppercase tracking-[0.12em] text-primary mb-6 flex items-center gap-2">
+          <Settings size={16} /> SETTINGS
         </h1>
 
         {/* Tabs */}
