@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAccounts, getPosts } from '../lib/api'
-import { Search, ExternalLink, Heart, MessageCircle, Play, Eye, ChevronRight, Users, Sparkles, Filter, X } from 'lucide-react'
+import { Search, ExternalLink, Heart, MessageCircle, Play, Eye, Users, Sparkles } from 'lucide-react'
 
 const TIER_COLORS = {
   core: 'bg-blue-50 text-blue-700',
@@ -42,7 +42,7 @@ export default function CompetitorsPage() {
   const [accounts, setAccounts] = useState([])
   const [posts, setPosts] = useState([])
   const [search, setSearch] = useState('')
-  const [sortBy, setSortBy] = useState('virality_score')
+  const [sortBy, setSortBy] = useState('recent')
   const [loading, setLoading] = useState(true)
   const [selectedAccounts, setSelectedAccounts] = useState(new Set())
   const [pillarFilter, setPillarFilter] = useState('all')
@@ -201,8 +201,8 @@ export default function CompetitorsPage() {
           </select>
           <select value={sortBy} onChange={e => setSortBy(e.target.value)}
             className="text-[12px] border border-border rounded-lg px-2 py-2 bg-white">
+            <option value="recent">Most Recent</option>
             <option value="virality_score">Virality</option>
-            <option value="recent">Recent</option>
             <option value="likes">Likes</option>
             <option value="views">Views</option>
           </select>
@@ -223,13 +223,18 @@ export default function CompetitorsPage() {
           <p className="text-[13px] text-secondary">No posts match your filters. Run a scrape from Settings to populate.</p>
         ) : (
           <div className="grid gap-3">
-            {sortedPosts.slice(0, 50).map(post => (
+            {sortedPosts.slice(0, 100).map(post => (
               <div key={post.id} className="card p-4 hover:border-primary/10 transition-all">
                 {/* Top row: handle + badges */}
                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                   <Link to={`/competitors/${post.handle}`} className="text-[12px] font-medium text-primary hover:underline">
                     @{post.handle}
                   </Link>
+                  {(post.platform || post.account_platform) && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                      {(post.platform || post.account_platform) === 'tiktok' ? 'TT' : 'IG'}
+                    </span>
+                  )}
                   {post.tier && (
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${TIER_COLORS[post.tier]}`}>
                       {post.tier}
@@ -254,7 +259,7 @@ export default function CompetitorsPage() {
                 </div>
 
                 {/* Caption */}
-                <p className="text-[13px] text-primary leading-relaxed">{post.caption || 'No caption'}</p>
+                <p className="text-[13px] text-primary leading-relaxed line-clamp-2">{post.caption || 'No caption'}</p>
 
                 {/* Metrics + Actions */}
                 <div className="flex items-center gap-4 mt-3 text-[11px] text-secondary">
@@ -282,8 +287,8 @@ export default function CompetitorsPage() {
                 </div>
               </div>
             ))}
-            {sortedPosts.length > 50 && (
-              <p className="text-[12px] text-secondary text-center py-4">Showing top 50 of {sortedPosts.length} posts</p>
+            {sortedPosts.length > 100 && (
+              <p className="text-[12px] text-secondary text-center py-4">Showing top 100 of {sortedPosts.length} posts</p>
             )}
           </div>
         )}
