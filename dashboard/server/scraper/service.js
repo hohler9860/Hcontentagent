@@ -3,6 +3,9 @@ import { scrapeProfiles, scrapeHashtagPosts, scrapeTikTokProfiles } from './apif
 import { scoreNewPosts } from '../scoring/engine.js';
 import { classifyUnclassified } from '../scoring/classifier.js';
 
+// TikTok handles to scrape (mapped to their IG account in the DB)
+const TIKTOK_CREATORS = ['dula.mov', 'ciaociaochau', 'teddiebaldassarre'];
+
 export async function scrapeAccounts(accounts) {
   if (!accounts || accounts.length === 0) return { scraped: 0, newPosts: 0 };
 
@@ -249,6 +252,96 @@ export async function scrapeAll() {
     results.errors.push(`hashtags: ${e.message}`);
   }
 
+  // Also scrape TikTok for key creators
+  try {
+    console.log('[scraper] Scraping TikTok profiles');
+    const tiktokResult = await scrapeTikTok();
+    results.tiktokPosts = tiktokResult.postsFound;
+    results.tiktokNew = tiktokResult.newPosts;
+  } catch (e) {
+    console.error('[scraper] TikTok scrape failed:', e.message);
+    results.errors.push(`tiktok: ${e.message}`);
+  }
+
+  // Auto-remix top winners
+  try {
+    console.log('[scraper] Auto-remixing top winners');
+    const remixResult = await autoRemixWinners();
+    results.autoRemixed = remixResult.remixed;
+  } catch (e) {
+    console.error('[scraper] Auto-remix failed:', e.message);
+  }
+
   console.log(`[scraper] Full scrape complete: ${results.newPosts} new posts, ${results.winners} winners`);
   return results;
+}
+
+// Scrape TikTok for key creators, store under their existing IG account IDs
+export async function scrapeTikTok() {
+  try {
+    const posts = await scrapeTikTokProfiles(TIKTOK_CREATORS, 20);
+    console.log(`[tiktok] Got ${posts.length} TikTok posts`);
+
+    const allAccounts = db.prepare('SELECT * FROM accounts').all();
+    const accountMap = {};
+    for (const a of allAccounts) accountMap[a.handle] = a;
+
+    const insert = db.prepare(
+      `INSERT OR IGNORE INTO posts (external_id, account_id, platform, type, caption, timestamp,
+       likes, comments, views, plays, shares, saves, display_url, url, is_pinned)
+       VALUES (?, ?, 'tiktok', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    );
+
+    let inserted = 0;
+    for (const post of posts) {
+      const account = accountMap[post.ownerUsername];
+      if (!account) continue;
+      const r = insert.run(
+        post.external_id, account.id, post.type, post.caption, post.timestamp,
+        post.likes, post.comments, post.views, post.plays,
+        post.shares || 0, post.saves || 0, post.display_url, post.url, post.is_pinned
+      );
+      if (r.changes > 0) inserted++;
+    }
+
+    // Score new posts
+    const scoreResult = scoreNewPosts();
+    try { await classifyUnclassified(); } catch (e) {}
+
+    return { postsFound: posts.length, newPosts: inserted, winners: scoreResult.winners };
+  } catch (e) {
+    console.error('[tiktok] Scrape failed:', e.message);
+    return { postsFound: 0, newPosts: 0, winners: 0 };
+  }
+}
+
+// Auto-remix top un-remixed winners
+async function autoRemixWinners(limit = 5) {
+  const apiKey = db.prepare("SELECT value FROM settings WHERE key = 'anthropic_api_key'").get()?.value;
+  if (!apiKey) return { remixed: 0 };
+
+  const winners = db.prepare(`
+    SELECT p.id FROM posts p
+    WHERE p.is_winner = 1
+      AND p.id NOT IN (SELECT source_post_id FROM scripts WHERE source_post_id IS NOT NULL)
+    ORDER BY p.virality_score DESC
+    LIMIT ?
+  `).all(limit);
+
+  if (winners.length === 0) return { remixed: 0 };
+
+  // Call our own remix endpoint
+  try {
+    const res = await fetch('http://localhost:3001/api/remix/batch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ post_ids: winners.map(w => w.id) }),
+    });
+    const data = await res.json();
+    console.log(`[auto-remix] Remixed ${data.remixed} winners`);
+    return { remixed: data.remixed };
+  } catch (e) {
+    console.error('[auto-remix] Failed:', e.message);
+    return { remixed: 0 };
+  }
 }
