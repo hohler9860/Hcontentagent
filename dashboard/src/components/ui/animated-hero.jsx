@@ -16,39 +16,36 @@ export function AnimatedHero({ subtitle, children }) {
   }, [titleNumber, titles]);
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       <div className="max-w-[1080px] mx-auto px-6">
-        <div className="flex gap-6 py-16 lg:py-20 items-center justify-center flex-col">
-          <div className="flex gap-4 flex-col">
-            <h1 className="text-4xl md:text-6xl max-w-2xl tracking-[-0.03em] text-center font-semibold leading-tight text-primary">
-              <span>DIALED BY H</span>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
-                &nbsp;
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={index}
-                    className="absolute font-semibold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text"
-                    initial={{ opacity: 0, y: "-100" }}
-                    transition={{ type: "spring", stiffness: 50 }}
-                    animate={
-                      titleNumber === index
-                        ? { y: 0, opacity: 1 }
-                        : { y: titleNumber > index ? -150 : 150, opacity: 0 }
-                    }
-                  >
-                    {title}
-                  </motion.span>
-                ))}
-              </span>
-            </h1>
+        <div className="flex gap-5 py-14 lg:py-18 items-center justify-center flex-col">
+          <img src="/logo-dark.png" alt="Dialed by H" className="h-10 md:h-14" />
 
-            {subtitle && (
-              <p className="text-base md:text-lg leading-relaxed tracking-tight text-secondary max-w-xl text-center mx-auto">
-                {subtitle}
-              </p>
-            )}
+          <div className="relative flex w-full justify-center overflow-hidden h-12 md:h-16">
+            {titles.map((title, index) => (
+              <motion.span
+                key={index}
+                className="absolute text-3xl md:text-5xl font-bold uppercase tracking-[0.06em] text-secondary/60"
+                initial={{ opacity: 0, y: "-100" }}
+                transition={{ type: "spring", stiffness: 50 }}
+                animate={
+                  titleNumber === index
+                    ? { y: 0, opacity: 1 }
+                    : { y: titleNumber > index ? -150 : 150, opacity: 0 }
+                }
+              >
+                {title}
+              </motion.span>
+            ))}
           </div>
-          {children && <div className="flex flex-row gap-3">{children}</div>}
+
+          {subtitle && (
+            <p className="text-[14px] leading-relaxed text-secondary max-w-md text-center">
+              {subtitle}
+            </p>
+          )}
+
+          {children && <div className="flex flex-row gap-3 mt-2">{children}</div>}
         </div>
       </div>
     </div>

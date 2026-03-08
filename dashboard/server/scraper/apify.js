@@ -29,7 +29,7 @@ export async function scrapeProfiles(handles, postsPerProfile = 20) {
           resultsType: 'posts',
           resultsLimit: postsPerProfile,
           addParentData: true,
-          onlyPostsNewerThan: '7 days',
+          onlyPostsNewerThan: '30 days',
         }),
         signal: AbortSignal.timeout(660000), // 11 min client timeout
       }

@@ -49,8 +49,8 @@ export default function InsightsPage() {
   const { hookPerformance, pillarPerformance, accountRankings, winningCombos, formatBreakdown } = data
 
   return (
-    <section className="fade-up d2 py-12 px-6">
-      <div className="max-w-[1080px] mx-auto">
+    <section className="fade-up d2 py-12 px-6 overflow-hidden">
+      <div className="max-w-[1080px] mx-auto min-w-0">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-[13px] font-bold uppercase tracking-[0.12em] text-primary">CONTENT INTELLIGENCE</h1>
@@ -118,7 +118,7 @@ export default function InsightsPage() {
         </div>
 
         {/* Content Pillar Performance */}
-        <div className="card p-5 mb-6">
+        <div className="card p-5 mb-6 overflow-hidden">
           <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-primary mb-1 flex items-center gap-2">
             <BarChart3 size={14} /> Content Pillar Performance
           </h2>
@@ -128,22 +128,22 @@ export default function InsightsPage() {
               {pillarPerformance.map(p => {
                 const maxViews = pillarPerformance[0]?.avg_views || 1
                 return (
-                  <div key={p.content_pillar} className="flex items-center gap-3">
-                    <span className={`text-[11px] px-2 py-0.5 rounded-full shrink-0 w-32 text-center ${PILLAR_COLORS[p.content_pillar] || 'bg-gray-50 text-gray-600'}`}>
+                  <div key={p.content_pillar} className="flex items-center gap-3 min-w-0">
+                    <span className={`text-[11px] px-2 py-0.5 rounded-full shrink-0 w-28 text-center truncate ${PILLAR_COLORS[p.content_pillar] || 'bg-gray-50 text-gray-600'}`}>
                       {p.content_pillar}
                     </span>
-                    <div className="flex-1">
-                      <div className="w-full bg-bg-alt rounded-full h-3 relative">
+                    <div className="flex-1 min-w-0">
+                      <div className="w-full bg-bg-alt rounded-full h-3 overflow-hidden">
                         <div
                           className="bg-primary/40 h-3 rounded-full transition-all"
                           style={{ width: `${Math.max((p.avg_views / maxViews) * 100, 5)}%` }}
                         />
                       </div>
                     </div>
-                    <div className="shrink-0 flex gap-4 text-[11px]">
-                      <span className="text-secondary">{p.count} posts</span>
-                      <span className="text-primary font-medium w-16 text-right">{formatNumber(p.avg_likes)} avg</span>
-                      <span className="text-amber-600 font-medium w-8 text-right">{p.winner_count}W</span>
+                    <div className="shrink-0 flex gap-3 text-[11px]">
+                      <span className="text-secondary whitespace-nowrap">{p.count} posts</span>
+                      <span className="text-primary font-medium w-14 text-right whitespace-nowrap">{formatNumber(p.avg_likes)} avg</span>
+                      <span className="text-amber-600 font-medium w-6 text-right">{p.winner_count}W</span>
                     </div>
                   </div>
                 )

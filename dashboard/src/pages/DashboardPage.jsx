@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getOverviewStats, getWinners } from '../lib/api'
-import { Trophy, TrendingUp, Zap, Clock, FileText, Pen, Users, ArrowRight, Sparkles } from 'lucide-react'
-import { AnimatedHero } from '../components/ui/animated-hero'
-import { RainbowButton } from '../components/ui/rainbow-button'
-import { ShineBorder } from '../components/ui/shine-border'
+import { Trophy, TrendingUp, Zap, Clock, FileText, Pen, Users, ArrowRight } from 'lucide-react'
 
 export default function DashboardPage() {
   const [stats, setStats] = useState(null)
@@ -18,25 +15,18 @@ export default function DashboardPage() {
 
   return (
     <div>
-      {/* Animated Hero */}
-      <AnimatedHero subtitle="Your content pipeline command center. Track competitors, detect viral winners, remix scripts.">
-        <Link to="/competitors">
-          <RainbowButton>
-            <Sparkles size={15} className="mr-2" /> EXPLORE COMPETITORS
-          </RainbowButton>
-        </Link>
-        <Link to="/insights">
-          <button className="h-11 px-8 rounded-xl border border-border text-[14px] font-medium text-primary hover:bg-bg-alt transition-colors cursor-pointer bg-white">
-            VIEW INSIGHTS
-          </button>
-        </Link>
-      </AnimatedHero>
+      {/* Page Header */}
+      <section className="fade-up d1 pt-10 pb-4 px-6">
+        <div className="max-w-[1080px] mx-auto">
+          <h1 className="text-[13px] font-bold uppercase tracking-[0.12em] text-primary">DASHBOARD</h1>
+          <p className="text-[12px] text-secondary mt-1">Content pipeline command center</p>
+        </div>
+      </section>
 
       {/* Quick Stats Row */}
       {stats && (
-        <section className="fade-up d2 py-8 px-6">
+        <section className="fade-up d2 py-6 px-6">
           <div className="max-w-[1080px] mx-auto">
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-secondary mb-4">OVERVIEW</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <StatCard icon={FileText} label="POSTS TRACKED" value={stats.totalPosts} />
               <StatCard icon={Zap} label="WINNERS THIS WEEK" value={stats.winnersThisWeek} accent />
@@ -49,7 +39,7 @@ export default function DashboardPage() {
 
       {/* New Winners */}
       {winners.length > 0 && (
-        <section className="fade-up d3 py-8 px-6">
+        <section className="fade-up d3 py-6 px-6">
           <div className="max-w-[1080px] mx-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-secondary">NEW WINNERS THIS WEEK</h2>
@@ -59,31 +49,22 @@ export default function DashboardPage() {
             </div>
             <div className="grid gap-3">
               {winners.slice(0, 5).map(w => (
-                <ShineBorder
-                  key={w.id}
-                  borderRadius={12}
-                  borderWidth={1}
-                  duration={10}
-                  color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-                  className="w-full min-w-0 p-0 bg-white"
-                >
-                  <div className="p-4 flex items-center justify-between w-full">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full">
-                          @{w.handle}
-                        </span>
-                        <span className="text-[10px] text-secondary uppercase tracking-wider">{w.tier}</span>
-                      </div>
-                      <p className="text-[13px] text-primary truncate">{w.caption}</p>
-                      <p className="text-[11px] text-secondary mt-1">{w.trigger_reason}</p>
+                <div key={w.id} className="card p-4 flex items-center justify-between">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full">
+                        @{w.handle}
+                      </span>
+                      <span className="text-[10px] text-secondary uppercase tracking-wider">{w.tier}</span>
                     </div>
-                    <div className="text-right shrink-0 ml-4">
-                      <div className="text-[18px] font-bold text-primary">{w.virality_score}</div>
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-secondary">VIRALITY</div>
-                    </div>
+                    <p className="text-[13px] text-primary truncate">{w.caption}</p>
+                    <p className="text-[11px] text-secondary mt-1">{w.trigger_reason}</p>
                   </div>
-                </ShineBorder>
+                  <div className="text-right shrink-0 ml-4">
+                    <div className="text-[18px] font-bold text-primary">{w.virality_score}</div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-secondary">VIRALITY</div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -92,7 +73,7 @@ export default function DashboardPage() {
 
       {/* Pipeline Pulse */}
       {stats?.pipeline && Object.keys(stats.pipeline).length > 0 && (
-        <section className="fade-up d4 py-8 px-6 bg-bg-alt">
+        <section className="fade-up d4 py-6 px-6 bg-bg-alt">
           <div className="max-w-[1080px] mx-auto">
             <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-secondary mb-4">PIPELINE PULSE</h2>
             <div className="flex gap-3 flex-wrap">
@@ -108,7 +89,7 @@ export default function DashboardPage() {
       )}
 
       {/* Quick Actions */}
-      <section className="fade-up d5 py-10 px-6">
+      <section className="fade-up d5 py-8 px-6">
         <div className="max-w-[1080px] mx-auto">
           <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-secondary mb-4">QUICK ACTIONS</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
