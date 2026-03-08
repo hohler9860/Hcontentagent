@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS posts (
   content_pillar TEXT,
   hook_type TEXT,
   format_tags TEXT,
+  transcript TEXT,
   created_at TEXT DEFAULT (datetime('now'))
 );
 
