@@ -10,31 +10,43 @@ export async function scrapeProfiles(handles, postsPerProfile = 20) {
   const token = getApiToken();
   if (!token) throw new Error('APIFY_API_TOKEN not configured. Set it in Settings > API Keys or .env');
 
-  // Build directUrls from handles
-  const directUrls = handles.map(h => `https://www.instagram.com/${h.replace('@', '')}/`);
+  // Batch in groups of 5 to avoid timeouts
+  const BATCH_SIZE = 5;
+  const allPosts = [];
 
-  const response = await fetch(
-    `https://api.apify.com/v2/acts/apify~instagram-scraper/run-sync-get-dataset-items?token=${token}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        directUrls,
-        resultsType: 'posts',
-        resultsLimit: postsPerProfile,
-        addParentData: true,
-        onlyPostsNewerThan: '7 days',
-      }),
+  for (let i = 0; i < handles.length; i += BATCH_SIZE) {
+    const batch = handles.slice(i, i + BATCH_SIZE);
+    const directUrls = batch.map(h => `https://www.instagram.com/${h.replace('@', '')}/`);
+    console.log(`[apify] Scraping IG batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(handles.length / BATCH_SIZE)}: ${batch.join(', ')}`);
+
+    const response = await fetch(
+      `https://api.apify.com/v2/acts/apify~instagram-scraper/run-sync-get-dataset-items?token=${token}&timeout=600`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          directUrls,
+          resultsType: 'posts',
+          resultsLimit: postsPerProfile,
+          addParentData: true,
+          onlyPostsNewerThan: '7 days',
+        }),
+        signal: AbortSignal.timeout(660000), // 11 min client timeout
+      }
+    );
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => '');
+      console.error(`[apify] Batch failed: ${response.status} — ${text.slice(0, 200)}`);
+      continue; // Don't fail the whole scrape for one batch
     }
-  );
 
-  if (!response.ok) {
-    const text = await response.text().catch(() => '');
-    throw new Error(`Apify Instagram scrape failed: ${response.status} — ${text.slice(0, 200)}`);
+    const data = await response.json();
+    allPosts.push(...data.map(normalizeInstagramPost));
+    console.log(`[apify] Batch got ${data.length} posts`);
   }
 
-  const data = await response.json();
-  return data.map(normalizeInstagramPost);
+  return allPosts;
 }
 
 // Scrape Instagram hashtags using apify/instagram-scraper

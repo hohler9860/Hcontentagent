@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getAccounts, createAccount, updateAccount, deleteAccount, getSettings, updateSettings, getScrapeRuns, triggerScrape, runScoring } from '../lib/api'
-import { Plus, Trash2, Edit3, Save, X, RefreshCw, CheckCircle, XCircle, Loader2, Settings } from 'lucide-react'
+import { Plus, Trash2, Edit3, Save, X, RefreshCw, CheckCircle, XCircle, Loader2, Settings, TrendingUp } from 'lucide-react'
 
 const TABS = ['Accounts', 'Scrape Config', 'Scoring Weights', 'API Keys', 'Scrape Health']
 const TIERS = ['core', 'primary', 'ecosystem', 'discovered']

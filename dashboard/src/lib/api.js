@@ -58,6 +58,7 @@ export const updateSetting = (key, value) => request(`/settings/${key}`, { metho
 // Stats
 export const getOverviewStats = () => request('/stats/overview');
 export const getAccountStats = (id) => request(`/stats/account/${id}`);
+export const getInsights = (days = 30) => request(`/stats/insights?days=${days}`);
 
 // Remix
 export const remixPost = (data) => request('/remix', { method: 'POST', body: JSON.stringify(data) });

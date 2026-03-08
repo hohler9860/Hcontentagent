@@ -1,13 +1,31 @@
 import { Router } from 'express';
 import db from '../db.js';
 import { scoreNewPosts } from '../scoring/engine.js';
+import { classifyUnclassified } from '../scoring/classifier.js';
 
 const router = Router();
 
-// POST /api/scores/run — score unscored posts
-router.post('/run', (req, res) => {
+// POST /api/scores/run — score unscored posts + classify
+router.post('/run', async (req, res) => {
   try {
     const result = scoreNewPosts();
+    let classified = 0;
+    try {
+      const cr = await classifyUnclassified();
+      classified = cr.classified;
+    } catch (e) {
+      console.error('[scoring] Classification failed:', e.message);
+    }
+    res.json({ ...result, classified });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// POST /api/scores/classify — classify unclassified posts
+router.post('/classify', async (req, res) => {
+  try {
+    const result = await classifyUnclassified();
     res.json(result);
   } catch (e) {
     res.status(500).json({ error: e.message });
